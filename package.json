@@ -1,0 +1,11 @@
+{
+  "name": "restfoldermaker",
+  "version": "0.0.1",
+  "description": "mvc folder structure in single cmd",
+  "main": "index.js",
+  "scripts": {
+    "test": "node ./index.js"
+  },
+  "author": "qureshiowais91",
+  "license": "ISC"
+}
