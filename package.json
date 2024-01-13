@@ -1,6 +1,6 @@
 {
   "name": "restfoldermaker",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "mvc folder structure in single cmd",
   "main": "index.js",
   "scripts": {
