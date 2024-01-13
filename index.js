@@ -1,6 +1,5 @@
-#!/usr/bin/env node
-
-const { execSync } = require('child_process');
+const fs = require('fs');
+const path = require('path');
 
 const projectRoot = './';
 
@@ -9,16 +8,21 @@ const files = ['app.js', 'server.js', 'package.json', '.env'];
 
 // Create folders
 folders.forEach(folder => {
-  const folderPath = `${projectRoot}${folder}`;
-  execSync(`npx make-dir ${folderPath}`);
-  console.log(`Created folder: ${folderPath}`);
+  const folderPath = path.join(projectRoot, folder);
+  if (!fs.existsSync(folderPath)) {
+    fs.mkdirSync(folderPath);
+    console.log(`Created folder: ${folderPath}`);
+  }
 });
 
 // Create files
 files.forEach(file => {
-  const filePath = `${projectRoot}${file}`;
-  execSync(`npx echo "" > ${filePath}`);
-  console.log(`Created file: ${filePath}`);
+  const filePath = path.join(projectRoot, file);
+
+  if (!fs.existsSync(filePath)) {
+    fs.writeFileSync(filePath, '', 'utf-8');
+    console.log(`Created file: ${filePath}`);
+  }
 });
 
 // Create content for specific files
@@ -34,7 +38,7 @@ app.listen(PORT, () => {
 });
 `;
 
-execSync(`npx echo "${appJsContent.trim()}" > ${projectRoot}app.js`);
+fs.writeFileSync(path.join(projectRoot, 'app.js'), appJsContent.trim(), 'utf-8');
 console.log('Added content to app.js');
 
 const serverJsContent = `
@@ -48,29 +52,8 @@ app.listen(PORT, () => {
 });
 `;
 
-execSync(`npx echo "${serverJsContent.trim()}" > ${projectRoot}server.js`);
+fs.writeFileSync(path.join(projectRoot, 'server.js'), serverJsContent.trim(), 'utf-8');
 console.log('Added content to server.js');
 
-const packageJsonContent = `
-{
-  "name": "your-project-name",
-  "version": "1.0.0",
-  "description": "Your project description",
-  "main": "server.js",
-  "scripts": {
-    "start": "node server.js"
-  },
-  "dependencies": {
-    "express": "^4.17.1"
-    // Add other dependencies as needed
-  }
-}
-`;
 
-execSync(`npx echo "${packageJsonContent.trim()}" > ${projectRoot}package.json`);
-console.log('Added content to package.json');
-
-execSync(`npx echo "" > ${projectRoot}.env`);
-console.log('Created .env');
-
-console.log('\nREST API project structure created successfully.');
+console.log('\nProject structure created successfully.');
