@@ -10,6 +10,6 @@
   "author": "qureshiowais91",
   "license": "ISC",
   "bin": {
-    "restfoldermaker": " node ./index.js"
+    "restfoldermaker": "node ./index.js"
   }
 }
