@@ -44,11 +44,6 @@ app.listen(PORT, () => {
   console.log('Added content to app.js');
 
 
-
-  fs.writeFileSync(path.join(projectRoot, 'server.js'), serverJsContent.trim(), 'utf-8');
-  console.log('Added content to server.js');
-
-
   console.log('\nProject structure created successfully.');
 }
 
