@@ -3,7 +3,6 @@ import fs from 'fs'
 import path from 'path'
 
 export function restFolder() {
-  return 0;
   const projectRoot = './';
 
   const folders = ['controllers', 'models', 'routes', 'middleware', 'config', 'services', 'validators'];
