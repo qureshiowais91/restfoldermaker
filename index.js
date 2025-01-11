@@ -1,7 +1,8 @@
 #! /usr/bin/env node
 
-import { restFolder } from './restfolder.js';
-import { restCrud } from './restcrud.js';
+// import { restFolder } from './restfolder.js';
+// import { restCrud } from './restcrud.js';
+import { generateCrudApi } from './restcrud.js';
 
 import inquirer from 'inquirer';
 
@@ -19,13 +20,8 @@ const askQuestion = async () => {
   console.log(ans.structure);
 
   if (ans.structure == 'rest api') {
-    console.log(restFolder());
-  } else {
-    ans.structure == 'rest crud';
-  }
-  {
-    console.log(restCrud());
-  }
+    generateCrudApi();
+  } 
 };
 
 askQuestion();

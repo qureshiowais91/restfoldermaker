@@ -1,10 +1,13 @@
 import fs from 'fs';
 import path from 'path';
 
-export function restCrud() {
+export function generateCrudApi() {
   const projectRoot = './';
 
-  const folders = ['controllers', 'models', 'routes', 'middleware', 'config', 'services', 'validators'];
+  // Folders to create
+  const folders = ['controllers', 'models', 'routes', 'middleware', 'config'];
+
+  // Files to create
   const files = ['app.js', 'package.json', '.env'];
 
   // Create folders
@@ -19,24 +22,21 @@ export function restCrud() {
   // Create files
   files.forEach(file => {
     const filePath = path.join(projectRoot, file);
-
     if (!fs.existsSync(filePath)) {
       fs.writeFileSync(filePath, '', 'utf-8');
       console.log(`Created file: ${filePath}`);
     }
   });
 
-  // Create content for specific files
-
-  // app.js content
+  // 1. app.js content
   const appJsContent = `
 const express = require('express');
-const app = express();
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const { PORT, MONGO_URI } = require('./config');
 
 // Middleware
+const app = express();
 app.use(bodyParser.json());
 
 // Routes
@@ -57,7 +57,7 @@ app.listen(PORT, () => {
   fs.writeFileSync(path.join(projectRoot, 'app.js'), appJsContent.trim(), 'utf-8');
   console.log('Added content to app.js');
 
-  // .env content
+  // 2. .env content
   const envContent = `
 PORT=3000
 MONGO_URI=mongodb://localhost:27017/mydatabase
@@ -66,11 +66,11 @@ MONGO_URI=mongodb://localhost:27017/mydatabase
   fs.writeFileSync(path.join(projectRoot, '.env'), envContent.trim(), 'utf-8');
   console.log('Added content to .env');
 
-  // package.json content
+  // 3. package.json content
   const packageJsonContent = {
-    name: "my-express-app",
+    name: "my-crud-api",
     version: "1.0.0",
-    description: "A basic Express.js app with CRUD API",
+    description: "A basic Express CRUD API",
     main: "app.js",
     scripts: {
       start: "node app.js"
@@ -85,7 +85,7 @@ MONGO_URI=mongodb://localhost:27017/mydatabase
   fs.writeFileSync(path.join(projectRoot, 'package.json'), JSON.stringify(packageJsonContent, null, 2), 'utf-8');
   console.log('Added content to package.json');
 
-  // User model
+  // 4. User model (models/user.js)
   const userModelContent = `
 const mongoose = require('mongoose');
 
@@ -101,7 +101,7 @@ module.exports = mongoose.model('User', userSchema);
   fs.writeFileSync(path.join(projectRoot, 'models/user.js'), userModelContent.trim(), 'utf-8');
   console.log('Added content to user model');
 
-  // User controller
+  // 5. User controller (controllers/userController.js)
   const userControllerContent = `
 const User = require('../models/user');
 
@@ -172,16 +172,25 @@ exports.deleteUser = async (req, res) => {
   fs.writeFileSync(path.join(projectRoot, 'controllers/userController.js'), userControllerContent.trim(), 'utf-8');
   console.log('Added content to user controller');
 
-  // User routes
+  // 6. User routes (routes/userRoutes.js)
   const userRoutesContent = `
 const express = require('express');
 const router = express.Router();
 const userController = require('../controllers/userController');
 
+// Create a new user
 router.post('/', userController.createUser);
+
+// Get all users
 router.get('/', userController.getUsers);
+
+// Get a single user by ID
 router.get('/:id', userController.getUserById);
+
+// Update a user by ID
 router.put('/:id', userController.updateUser);
+
+// Delete a user by ID
 router.delete('/:id', userController.deleteUser);
 
 module.exports = router;
@@ -190,5 +199,6 @@ module.exports = router;
   fs.writeFileSync(path.join(projectRoot, 'routes/userRoutes.js'), userRoutesContent.trim(), 'utf-8');
   console.log('Added content to user routes');
 
-  console.log('\nProject structure created successfully with CRUD API.');
+  console.log('\nProject structure with full CRUD API created successfully.');
 }
+
