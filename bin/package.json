@@ -1,15 +1,12 @@
 {
   "name": "restfoldermaker",
-  "version": "1.0.1",
-  "description": "My awesome package",
+  "version": "1.0.5",
+  "type": "module",
   "main": "index.js",
   "bin": {
     "restfoldermaker": "./index.js"
   },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": ["npm", "package"],
-  "author": "Your Name",
-  "license": "MIT"
+  "dependencies": {
+    "inquirer": "^9.0.0"
+  }
 }
